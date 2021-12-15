@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>bitexco3d</title>
+
+    <style>
+        html,
+        body,
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.16/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.16/"></script>
+
+    <script>
+        require([
+            "esri/Map",
+            "esri/views/SceneView",
+            "esri/layers/GeoJSONLayer",
+            "esri/layers/SceneLayer", "esri/layers/GraphicsLayer", "esri/Graphic", "esri/request"
+        ], function (Map, SceneView, GeoJSONLayer, SceneLayer,
+            GraphicsLayer, Graphic, esriRequest) {
+            var createGraphic = function (data) {
+                return new Graphic({
+                    geometry: data,
+                    symbol: data.symbol,
+                    attributes: data,
+                    popupTemplate: data.popupTemplate
+                });
+            };
+
+            const json_options = {
+                query: {
+                    f: "json"
+                },
+                responseType: "json"
+            };
+            // request json
+            esriRequest('http://localhost:5000/api/face/bitexcojson', json_options).then(function (response) {
+                var graphicsLayer = new GraphicsLayer();
+                console.log(response);
+                response.data.forEach(function (data) {
+                    graphicsLayer.add(createGraphic(data));
+                });
+                map.add(graphicsLayer);
+
+            });
+            // geojson layer
+            const upperBitexcoKhung = new GeoJSONLayer({
+                url: "./bitexco_khung.geojson",
+
+            });
+            upperBitexcoKhung.renderer = {
+                type: "simple",
+                symbol: {
+                    type: "polygon-3d",
+                    symbolLayers: [{
+                        type: "extrude",
+                        size: 0,
+                        material: {
+                            color: "#61C3A2"
+                        },
+                        edges: {
+                            type: "solid", // autocasts as new SolidEdges3D()
+                            color: [0, 0, 0, 1],
+                            size: 30
+                        },
+                    }]
+                }
+            }
+            const upperBitexco = new GeoJSONLayer({
+                url: "./bitexco.geojson",
+                renderer: {
+                    type: "simple",
+                    symbol: {
+                        type: "polygon-3d",
+                        symbolLayers: [{
+                            type: "extrude",
+                            size: 4,
+                            material: {
+                                color: "rgba(34,54,165,0.5)"
+                            },
+                            edges: {
+                                type: "solid", // autocasts as new SolidEdges3D()
+                                color: [50, 50, 50, 0.5]
+                            },
+                        }]
+                    }
+                }
+            });
+            upperBitexco.renderer = {
+                type: "simple",
+                symbol: {
+                    type: "polygon-3d",
+                    symbolLayers: [{
+                        type: "extrude",
+                        size: 4,
+                        material: {
+                            color: "rgba(34,54,165,0.5)"
+                        },
+                        edges: {
+                            type: "solid", // autocasts as new SolidEdges3D()
+                            color: [50, 50, 50, 0.5]
+                        },
+                    }]
+                }
+            }
+
+            const upperBitexco2 = new GeoJSONLayer({
+                url: "./bitexco.geojson"
+
+            });
+            upperBitexco2.renderer = {
+                type: "simple",
+                symbol: {
+                    type: "polygon-3d",
+                    symbolLayers: [{
+                        type: "extrude",
+                        size: 0.8,
+                        material: {
+                            color: "rgba(0,0,0,1)"
+                        },
+                        edges: {
+                            type: "solid", // autocasts as new SolidEdges3D()
+                            color: [50, 50, 50, 0.5]
+                        },
+                    }]
+                }
+            }
+            const upperBitexcoSanbay = new GeoJSONLayer({
+                url: "./bitexco_sanbay.geojson"
+
+            });
+            upperBitexcoSanbay.renderer = {
+                type: "simple",
+                symbol: {
+                    type: "polygon-3d",
+                    symbolLayers: [{
+                        type: "extrude",
+                        size: 2,
+                        material: {
+                            color: "rgb(34,54,165)"
+                        },
+                        edges: {
+                            type: "solid", // autocasts as new SolidEdges3D()
+                            color: [50, 50, 50, 0.5]
+                        },
+                    }]
+                }
+            }
+            const lowerBitexcoBottom = new GeoJSONLayer({
+                url: "./bitexco_day.geojson"
+            });
+            lowerBitexcoBottom.renderer = {
+                type: "simple",
+                symbol: {
+                    type: "polygon-3d",
+                    symbolLayers: [{
+                        type: "extrude",
+                        size: 2,
+                        material: {
+                            color: "rgb(34,54,165)"
+                        },
+                        edges: {
+                            type: "solid", // autocasts as new SolidEdges3D()
+                            color: [50, 50, 50, 0.5]
+                        },
+                    }]
+                }
+            }
+
+            const lowerRoofBitexco = new GeoJSONLayer({
+                url: "./bitexco_roof.geojson"
+            });
+
+            lowerRoofBitexco.renderer = {
+                type: "simple",
+                symbol: {
+                    type: "polygon-3d",
+                    symbolLayers: [{
+                        type: "extrude",
+                        size: 3.5,
+                        material: {
+                            color: "rgb(0,0,0)"
+                        },
+                        edges: {
+                            type: "solid", // autocasts as new SolidEdges3D()
+                            color: [50, 50, 50, 0.5]
+                        },
+                    }]
+                }
+            }
+
+            const map = new Map({
+                basemap: "topo-vector",
+                ground: "world-elevation",
+                layers: [upperBitexcoKhung, upperBitexco, upperBitexco2, upperBitexcoSanbay, 
+                        lowerBitexcoBottom, lowerRoofBitexco] //end layers
+            });
+
+            const view = new SceneView({
+                container: "viewDiv",
+                map: map,
+                camera: {
+                    position: [106.70558462670756, 10.76479345539322, 300],
+                    heading: 0,
+                    tilt: 75
+                }
+            });
+
+            view.popup.defaultPopupTemplateEnabled = true;
+        });
+
+    </script>
+</head>
+
+<body>
+    <div id="viewDiv"></div>
+</body>
+
+</html>
