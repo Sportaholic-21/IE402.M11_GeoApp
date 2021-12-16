@@ -1,12 +1,9 @@
 const { Face } = require('../models/faceModel')
-
-function transformCoords(x, y, z) {
-    return [x,y,z]
-}
+const helper = require('./helpers')
 
 module.exports.getFace = async (req, res) => {
     const face = await Face.findById(req.params.id)
-    face.renderer = JSON.parse(face.renderer)
+    //face.renderer = JSON.parse(face.renderer)
     return res.send(face)
 }
 
@@ -14,20 +11,15 @@ module.exports.getBitexcoJson = async(req, res) => {
     let bitexcoJson = []
     let nodes = []
     let dummyJson = {}
-    const query = await Face.find().sort({_id: 'asc'})
+    const query = await Face.find().sort({_id: 'asc'}).limit(46)
+    nodes = helper.transformFaceNodeCoords(query)
     for (var i = 0; i < 46; i++) {
-        for (var z = 0; z < query[i].node.length; z++) {
-            nodes.push(transformCoords(query[i].node[z].x, query[i].node[z].y, query[i].node[z].z))
-        }
         dummyJson = {
             "type": "polygon",
             "rings": [nodes],
             "symbol": JSON.parse(query[i].renderer)
         }
-        // bitexcoJson[i].type = "Polygon"
-        // // bitexcoJson.push(query[i])
         bitexcoJson.push(dummyJson)
-        //bitexcoJson[i].renderer = JSON.parse(bitexcoJson[i].renderer)
     }
     return res.json(bitexcoJson)
 }
