@@ -11,8 +11,8 @@ const bodySchema = schema({
     height: { type: Number },
     storey: { type: Number },
     address: { type: String },
-    face: [{ type: Number, ref: 'Face' }],
-    field: { type: Number, ref: 'Field' }
+    face: [{ type: schema.Types.ObjectId, ref: 'Face' }],
+    field: { type: schema.Types.ObjectId, ref: 'Field' }
 })
 
 bodySchema.pre('find', function() {

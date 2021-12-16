@@ -1,5 +1,5 @@
 const { Face } = require('../models/faceModel')
-const helper = require('./helpers')
+const helper = require('../utils/helpers')
 
 module.exports.getFace = async (req, res) => {
     const face = await Face.findById(req.params.id)
@@ -11,13 +11,22 @@ module.exports.getBitexcoJson = async(req, res) => {
     let bitexcoJson = []
     let nodes = []
     let dummyJson = {}
-    const query = await Face.find().sort({_id: 'asc'}).limit(46)
+    const query = await Face.find().then(function (result) {
+        for (var i = 0; i < result.length; i++) {
+            if (result[i].file != "bitexco_9.json") {
+                result.splice(i, 1)
+                i--
+            }
+        }
+        return result
+    })
+
     nodes = helper.transformFaceNodeCoords(query)
-    for (var i = 0; i < 46; i++) {
+    for (var i = 0; i < query.length; i++) {
         dummyJson = {
             "type": "polygon",
             "rings": [nodes],
-            "symbol": JSON.parse(query[i].renderer)
+            "symbol": query[i].renderer
         }
         bitexcoJson.push(dummyJson)
     }

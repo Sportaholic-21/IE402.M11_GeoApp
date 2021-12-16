@@ -142,6 +142,69 @@
                 }
             });
 
+            const bitexco_day = new GeoJSONLayer({
+                url: server + "body/bitexco_day.geojson",
+                renderer: {
+                    type: "simple",
+                    symbol: {
+                        type: "polygon-3d",
+                        symbolLayers: [{
+                            type: "extrude",
+                            size: 2,
+                            material: {
+                                color: "rgb(34,54,165)"
+                            },
+                            edges: {
+                                type: "solid", // autocasts as new SolidEdges3D()
+                                color: [50, 50, 50, 0.5]
+                            },
+                        }]
+                    }
+                }
+            });
+
+            const bitexco_roof = new GeoJSONLayer({
+                url: server + "body/bitexco_roof.geojson",
+                renderer: {
+                    type: "simple",
+                    symbol: {
+                        type: "polygon-3d",
+                        symbolLayers: [{
+                            type: "extrude",
+                            size: 2,
+                            material: {
+                                color: "rgb(34,54,165)"
+                            },
+                            edges: {
+                                type: "solid", // autocasts as new SolidEdges3D()
+                                color: [50, 50, 50, 0.5]
+                            },
+                        }]
+                    }
+                }
+            });
+
+            const bitexco_rooftop = new GeoJSONLayer({
+                url: server + "body/bitexco_rooftop.geojson",
+                renderer: {
+                    type: "simple",
+                    symbol: {
+                        type: "polygon-3d",
+                        symbolLayers: [{
+                            type: "extrude",
+                            size: 2,
+                            material: {
+                                color: "rgb(34,54,165)"
+                            },
+                            edges: {
+                                type: "solid", // autocasts as new SolidEdges3D()
+                                color: [50, 50, 50, 0.5]
+                            },
+                        }]
+                    }
+                }
+            });
+
 
             const bitexco_hanhchinh = new GeoJSONLayer({
                 url: server + "body/bitexcoHanhChinh_geojson",
@@ -209,7 +272,9 @@
             const map = new Map({
                 basemap: "topo-vector",
                 ground: "world-elevation",
-                layers: [bitexco_hanhchinh_bao, bitexco, bitexco_sanbay, bitexco2, bitexco_khung1, bitexco_hanhchinh, bitexco_hanhchinh2] //end layers
+                layers: [bitexco_hanhchinh_bao, bitexco, bitexco_sanbay, bitexco2, 
+                        bitexco_khung1, bitexco_hanhchinh, bitexco_hanhchinh2,
+                        bitexco_roof, bitexco_rooftop, bitexco_day] //end layers
             });
            
             const view = new SceneView({

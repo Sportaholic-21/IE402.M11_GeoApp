@@ -7,7 +7,7 @@ module.exports.getField = async (req, res) => {
 
 module.exports.addField = async (req, res) => {
     const newField = Field({
-        _id: req.body.field_id,
+        //_id: req.body.field_id,
         name: req.body.field_name
     })
     try {

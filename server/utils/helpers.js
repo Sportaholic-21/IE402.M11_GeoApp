@@ -33,3 +33,17 @@ module.exports.findFaceRange = async (min, max) => {
         return q
     })
 }
+
+module.exports.findFacebyFile = async (filename) => {
+    return await Body.find().then(function(q) {
+        q.forEach(query => {
+            for (var i = 0; i< query.face.length; i++) {
+                if (query.face[i].file != filename) {
+                    query.face.splice(i, 1)
+                    i--
+                }
+            }
+        })
+        return q
+    })
+}

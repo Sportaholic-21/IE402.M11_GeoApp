@@ -2,10 +2,11 @@ const mongoose = require('mongoose')
 const schema = mongoose.Schema
 
 const faceSchema = schema({
-    _id: { type: Number },
+    //_id: { type: Number },
     type: { type: String },
     renderer: {},
-    node: [{ type: Number, ref: 'Node' }]
+    file: { type: String },
+    node: [{ type: schema.Types.ObjectId, ref: 'Node' }]
 })
 
 faceSchema.pre('find', function() {
