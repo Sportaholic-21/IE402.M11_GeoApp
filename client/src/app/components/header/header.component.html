@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+      <a href="#" class="navbar-brand">
+          <img src="https://puu.sh/IwrVm/8545077f2d.png" height="60em">
+      </a>
+      <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+          <div class="navbar-nav">
+              <a [routerLink]="['/home']" routerLinkActive="router-link-active"  class="nav-item nav-link active">HOME</a>
+              <a [routerLink]="['/map']" routerLinkActive="router-link-active" class="nav-item nav-link">3D MAP</a>
+              <a [routerLink]="['/contact']" routerLinkActive="router-link-active" class="nav-item nav-link">CONTACT</a>
+              <a [routerLink]="['/booking']" routerLinkActive="router-link-active" class="nav-item nav-link">BOOKING</a>
+          </div>
+          <div class="navbar-nav ms-auto">
+              <a [routerLink]="['/auth/login']" routerLinkActive="router-link-active" class="nav-item nav-link">LOG IN</a>
+              <a [routerLink]="['/auth/signup']" routerLinkActive="router-link-active" class="nav-item nav-link">SIGN UP</a>
+          </div>
+      </div>
+  </div>
+</nav>
