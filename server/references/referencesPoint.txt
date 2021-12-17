@@ -1,4 +1,0 @@
-File bitexco3d.html là file chính để mình thử nghiệm
-map3d.jsp là file html của nhóm Thọ, mình tham khảo từ đó + MapController của Thọ
-Trong MapController có mấy cái getMapping tới các geoJson, mình dựa vào đó để làm controller get của mình
-có một hàm mẫu Long làm bên faceController rồi á
